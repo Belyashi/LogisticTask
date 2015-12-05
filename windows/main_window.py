@@ -9,6 +9,10 @@ class MainWindow(QtGui.QMainWindow):
         self.setGeometry(600, 300, 500, 100)
         self.setWindowTitle('Logistic Task')
 
-        login_widget = SignUpWidget()
-        login_widget.setParent(self)
-        self.setCentralWidget(login_widget)
+        self.setCentralWidget(LoginWidget(self))
+
+    def sign_up_user(self):
+        self.setCentralWidget(SignUpWidget(self))
+
+    def cancel_sign_up(self):
+        self.setCentralWidget(LoginWidget(self))

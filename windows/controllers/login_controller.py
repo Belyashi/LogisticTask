@@ -9,8 +9,8 @@ class LoginWidget(QtGui.QWidget):
 
     _path = LOGIN_WIDGET
     
-    def __init__(self):
-        super(LoginWidget, self).__init__()
+    def __init__(self, *args, **kwargs):
+        super(LoginWidget, self).__init__(*args, **kwargs)
         uic.loadUi(self._path, self)
         self.show()
 
@@ -23,9 +23,9 @@ class LoginWidget(QtGui.QWidget):
         hash = hashlib.sha224(password).hexdigest()
         # get user and compare values
         if False:
-            self.parent.successful_sign_in()
+            self.parent().successful_sign_in()
         else:
             self.error_label.setText('Check your login and password.')
 
     def handle_sign_up(self):
-        pass
+        self.parent().sign_up_user()
