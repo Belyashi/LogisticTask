@@ -1,16 +1,17 @@
 import os
 import hashlib
+
 from PyQt4 import QtCore, QtGui, uic
+from windows.widgets import LOGIN_WIDGET
 
 
 class LoginWidget(QtGui.QWidget):
 
-    _file_name = 'login_widget.ui'
-    _path = '/'.join(os.path.abspath(__file__).split('/')[:-1] + [_file_name])
+    _path = LOGIN_WIDGET
     
     def __init__(self):
         super(LoginWidget, self).__init__()
-        uic.loadUi('windows/widgets/login_widget.ui', self)
+        uic.loadUi(self._path, self)
         self.show()
 
         self.sign_in.clicked.connect(self.handle_sign_in)

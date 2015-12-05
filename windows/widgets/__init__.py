@@ -1,1 +1,1 @@
-from login_controller import LoginWidget
+from path import *
