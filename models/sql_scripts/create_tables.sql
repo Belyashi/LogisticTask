@@ -2,7 +2,7 @@ CREATE TABLE Users (
   id INT NOT NULL AUTO_INCREMENT,
   login VARCHAR(20) NOT NULL,
   pass VARCHAR(20) NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id, login)
 );
 
 CREATE TABLE Cities(
