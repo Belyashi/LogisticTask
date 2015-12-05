@@ -12,6 +12,12 @@ class Db(object):
     def __del__(self):
         self.db.close()
 
+    def get_cursor(self):
+        return self.db.cursor()
+
+    def commit(self):
+        return self.db.commit()
+
     def execute(self, query, *args):
         cursor = self.db.cursor()
         cursor.execute(query, args)
