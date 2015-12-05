@@ -1,6 +1,6 @@
 INSERT INTO Orders
 (customer_id, delivered)
-VALUES (%s, FALSE)
+VALUES (%s, FALSE);
 
 INSERT INTO OrdersGoods
 (order_id, good_id, count)
