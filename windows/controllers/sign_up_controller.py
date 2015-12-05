@@ -20,6 +20,7 @@ class SignUpWidget(QtGui.QWidget):
         self.additional_data.addWidget(self._driver_form)
         self.additional_data.addWidget(self._company_form)
         self.role_selector.setCurrentIndex(0)
+        self.changed_role_selector(0)
 
     def changed_role_selector(self, index):
         role = self.role_selector.itemText(index)
