@@ -8,4 +8,6 @@ class MainWindow(QtGui.QMainWindow):
         self.setGeometry(600, 300, 500, 100)
         self.setWindowTitle("Logistic Task")
 
-        self.setCentralWidget(LoginWidget())
+        login_widget = LoginWidget()
+        login_widget.setParent(self)
+        self.setCentralWidget(login_widget)
