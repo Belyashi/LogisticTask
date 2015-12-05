@@ -1,78 +1,88 @@
-CREATE TABLE Cities (
-    id int not null AUTO_INCREMENT,
-    name varchar(20) not null,
-    PRIMARY KEY (id)
+CREATE TABLE Users (
+  id INT NOT NULL AUTO_INCREMENT,
+  login VARCHAR(20) NOT NULL,
+  pass VARCHAR(20) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE Cities(
+  id INT NOT NULL,
+  name VARCHAR(20) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE Organizations (
+  id INT NOT NULL,
+  name VARCHAR(20) NOT NULL,
+  user_id INT NOT NULL,
+  city_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES Users(id),
+  FOREIGN KEY (city_id) REFERENCES Cities(id)
 );
 
 CREATE TABLE Drivers (
-    id int not null AUTO_INCREMENT,
-    name varchar(20) not null,
-    PRIMARY KEY (id)
+  id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  capacity INT NOT NULL,
+  location_city_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES Users(id),
+  FOREIGN KEY (location_city_id) REFERENCES Cities(id)
 );
 
-CREATE TABLE Producers (
-    id int not null AUTO_INCREMENT,
-    name varchar(20) not null,
-    city_id int not null,
-    PRIMARY KEY (id),
-    FOREIGN KEY (city_id) REFERENCES Cities(id)
-);
-
-CREATE TABLE Consumers (
-    id int not null AUTO_INCREMENT,
-    name varchar(20) not null,
-    city_id int not null,
-    PRIMARY KEY (id),
-    FOREIGN KEY (city_id) REFERENCES Cities(id)
-);
-
-CREATE TABLE Roots (
-    id int not null AUTO_INCREMENT,
-    travel_time time,
-    travel_length int,
-    PRIMARY KEY (id)
-);
-  
-CREATE TABLE Cities_Roots (
-    city_id int not null,
-    root_id int not null,
-    FOREIGN KEY (city_id) REFERENCES Cities(id),
-    FOREIGN KEY (root_id) REFERENCES Roots(id),
-    PRIMARY KEY (city_id, root_id)
-);
-  
-CREATE TABLE Ways (
-    id int not null AUTO_INCREMENT,
-	travel_time time,
-	travel_length int,
-    city2_id int not null,
-    city1_id int not null,
-    PRIMARY KEY (id),
-    FOREIGN KEY (city2_id) REFERENCES Cities(id),
-    FOREIGN KEY (city1_id) REFERENCES Cities(id)
-);
-  
-CREATE TABLE Roots_Ways (
-    id int not null AUTO_INCREMENT,
-    root_id int not null,
-    way_id int not null,
-    PRIMARY KEY (id),
-    FOREIGN KEY (root_id) REFERENCES Roots(id),
-    FOREIGN KEY (way_id) REFERENCES Ways(id)
-);
-  
-CREATE TABLE Orders (
-    id int not null AUTO_INCREMENT,
-	status varchar(20) not null,
-    driver_id int,
-    PRIMARY KEY (id),
-    FOREIGN KEY (driver_id) REFERENCES Drivers(id)
-);
-  
 CREATE TABLE Goods (
-    id int not null AUTO_INCREMENT,
-	name varchar(20) not null,
-    order_id int,
-    PRIMARY KEY (id),
-    FOREIGN KEY (order_id) REFERENCES Orders(id)
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(20) NOT NULL,
+  price INT NOT NULL,
+  producer_id INT NOT NULL,
+  weight INT NOT NULL,
+  residue INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (producer_id) REFERENCES Organizations(id)
+);
+
+CREATE TABLE Orders (
+  id INT NOT NULL AUTO_INCREMENT,
+  customer_id INT NOT NULL,
+  delivered BOOL NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (customer_id) REFERENCES Organizations(id)
+);
+
+CREATE TABLE OrdersGoods (
+  order_id INT NOT NULL,
+  goods_id INT NOT NULL,
+  count INT NOT NULL,
+  PRIMARY KEY (order_id, goods_id),
+  FOREIGN KEY (order_id) REFERENCES Orders(id),
+  FOREIGN KEY (goods_id) REFERENCES Goods(id)
+);
+
+CREATE TABLE DriversOrders (
+  driver_id INT NOT NULL,
+  order_id INT NOT NULL,
+  PRIMARY KEY (driver_id, order_id),
+  FOREIGN KEY (driver_id) REFERENCES Drivers(id),
+  FOREIGN KEY (order_id) REFERENCES Orders(id)
+);
+
+CREATE TABLE Ways (
+  id INT NOT NULL,
+  start_city_id INT NOT NULL,
+  finish_city_id INT NOT NULL,
+  length INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (start_city_id) REFERENCES Cities(id),
+  FOREIGN KEY (finish_city_id) REFERENCES Cities(id)
+);
+
+CREATE TABLE Routes (
+  id INT NOT NULL,
+  driver_id INT NOT NULL,
+  way_id INT NOT NULL,
+  performed BOOL NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (driver_id) REFERENCES Drivers(id),
+  FOREIGN KEY (way_id) REFERENCES Ways(id)
 );
