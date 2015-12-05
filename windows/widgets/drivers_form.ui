@@ -29,7 +29,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QTextBrowser" name="capacity">
+    <widget class="QTextEdit" name="capacity">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -45,7 +45,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QTextBrowser" name="location">
+    <widget class="QTextEdit" name="location">
      <property name="minimumSize">
       <size>
        <width>0</width>
