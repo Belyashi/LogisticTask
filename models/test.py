@@ -2,7 +2,8 @@ from users import Users
 
 
 users = Users()
-#users.register('lola', 'passlol')
-#print users.login('ol', 'pass')
-#print users.login('lol', 'pass')
-print users.login('lol', 'passlol')
+users.register('lola', 'passlol')
+users.register('lol2', 'passlol2')
+users.register('lol3', 'passlol3')
+
+print users.get_all()
