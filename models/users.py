@@ -48,5 +48,13 @@ class Users(Db):
         cur.close()
         return exist
 
-    def get_users(self):
-        pass
+    def get_all(self):
+        query = 'SELECT id, login FROM Users'
+        cur = self.execute(query)
+        data = [{
+                    'id': id,
+                    'login': login
+                }
+                for id, login in cur]
+        cur.close()
+        return data
