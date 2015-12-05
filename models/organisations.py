@@ -3,7 +3,10 @@ from db import Db
 
 class Organizations(Db):
     def get_goods(self):
-        pass
+        sql = 'SELECT * FROM Orders WHERE id = %s;'
+        cursor = self.execute(sql, self.id)
+        # doing smth
+        cursor.close()
 
     def add_goods(self):
         pass
