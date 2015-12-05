@@ -11,5 +11,17 @@ class DriverForm(QtGui.QWidget):
         uic.loadUi(self._path, self)
 
     def get_data(self):
-        pass
+        capacity = int(self.capacity.toPlainText())
+        location = self.location.toPlainText()
+        # FIXME: make normal check of location
+        if capacity >= 1 and location:
+            return {
+                'success': True,
+                'capacity': capacity,
+                'location': location
+            }
+        else:
+            return {
+                'success': False
+            }
 
