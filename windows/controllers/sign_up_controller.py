@@ -39,4 +39,6 @@ class SignUpWidget(QtGui.QWidget):
         if data['success'] and password == repeated_password:
             pass
             # Make registration
+        else:
+            self.error.setText('Something wrong with your form data.')
 
