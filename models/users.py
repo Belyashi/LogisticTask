@@ -3,7 +3,22 @@ from db import Db
 
 class Users(Db):
     def login(self, login, password):
-        pass
+        """:returns user id"""
+        query = (
+            'SELECT id, pass '
+            'FROM Users '
+            'WHERE login = %s'
+        )
+        cur = self.execute(query, login)
+        rows = cur.fetchall()
+        cur.close()
+
+        if len(rows) == 0:
+            raise ValueError('User does not exist')
+        elif rows[0][1] != password:
+            raise ValueError('Password is incorrect')
+        else:
+            return rows[0][0]
 
     def register(self, login, password):
         if self.__check_registered(login):
@@ -28,7 +43,7 @@ class Users(Db):
             'FROM Users '
             'WHERE login = %s'
         )
-        cur = self.execute(query, (login))
+        cur = self.execute(query, login)
         exist = cur.rowcount > 0
         cur.close()
         return exist
