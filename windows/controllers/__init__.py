@@ -1,12 +1,8 @@
 # Authorization
-from login_controller import LoginWidget
-from sign_up_controller import SignUpWidget
-from company_form import CompanyForm
-from driver_form import DriverForm
-
+from windows.controllers.auth import SignUpWidget, LoginWidget, DriverForm, \
+    CompanyForm
 # Organizations
-from organization_choice import OrganizationChoice
-from organization_interface import OrganizationInterface
-from goods_view import GoodsView
-from good_adder import GoodAdder
-from orders_view import OrdersView
+from windows.controllers.organization_interface import OrganizationInterface, \
+    OrganizationChoice, OrderAdder, GoodsView, GoodAdder, OrdersView
+# Drivers
+from windows.controllers.driver_interface import DriverInterface

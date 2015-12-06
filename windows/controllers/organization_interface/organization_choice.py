@@ -1,7 +1,9 @@
-from PyQt4 import QtCore, QtGui, uic
+from PyQt4 import QtGui, uic
+
+from windows.controllers.organization_interface import GoodsView
+
+from windows.controllers.organization_interface import OrdersView
 from windows.widgets.path import ORGANIZATION_CHOICE
-from windows.controllers.goods_view import GoodsView
-from windows.controllers.orders_view import OrdersView
 
 
 class OrganizationChoice(QtGui.QWidget):
@@ -14,15 +16,19 @@ class OrganizationChoice(QtGui.QWidget):
         self.stacked_widget = stacked_widget
         self.stacked_widget.addWidget(self)
         self.ancestor = args[0]
+        self.organization = self.ancestor.organization
+        self.organization_id = self.ancestor.organization_id
         self.goods_view = GoodsView(self.stacked_widget, self)
         self.orders_view = OrdersView(self.stacked_widget, self)
         self.goods.clicked.connect(self.show_goods)
         self.orders.clicked.connect(self.show_orders)
 
     def show_goods(self):
+        self.goods_view.update_info()
         self.stacked_widget.setCurrentWidget(self.goods_view)
 
     def show_orders(self):
+        #self.orders_view.update_info()
         self.stacked_widget.setCurrentWidget(self.orders_view)
 
     def on_back(self):

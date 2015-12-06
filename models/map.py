@@ -16,3 +16,6 @@ class Map(Db):
         data = self.get_dict_list(['start_city_id', 'finish_city_id', 'length'], cur)
         cur.close()
         return data
+
+    def get_city(self, city_id):
+        pass

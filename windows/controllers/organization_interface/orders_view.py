@@ -1,6 +1,7 @@
-from PyQt4 import QtCore, QtGui, uic
+from PyQt4 import QtGui, uic
+
+from windows.controllers.organization_interface.orders_adder import OrderAdder
 from windows.widgets.path import ORGANiZATION_ORDERS
-from windows.controllers.orders_adder import OrderAdder
 
 
 class OrdersView(QtGui.QWidget):

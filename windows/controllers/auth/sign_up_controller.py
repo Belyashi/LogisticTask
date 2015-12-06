@@ -1,8 +1,9 @@
-from PyQt4 import QtCore, QtGui, uic
-from windows.widgets import SIGN_UP_WIDGET
-from driver_form import DriverForm
-from company_form import CompanyForm
+from PyQt4 import QtGui, uic
+
 from models.users import Users
+from windows.controllers.auth.company_form import CompanyForm
+from windows.controllers.auth.driver_form import DriverForm
+from windows.widgets import SIGN_UP_WIDGET
 
 
 class SignUpWidget(QtGui.QWidget):

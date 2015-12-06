@@ -17,7 +17,7 @@ class Organizations(Db):
         cursor.close()
         return data
 
-    def add_goods(self,name, price, organization_id, weight, residue):
+    def add_goods(self, name, price, organization_id, weight, residue):
         sql = (
             'INSERT INTO Goods '
             '(name, price, producer_id, weight, residue) '

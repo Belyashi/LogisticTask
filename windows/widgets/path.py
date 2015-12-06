@@ -18,3 +18,7 @@ ORGANIZATION_CHOICE = _path_to_this + 'organization_choice.ui'
 ORGANIZATION_GOODS = _path_to_this + 'organization_goods.ui'
 ORGANIZATION_INTERFACE = _path_to_this + 'organization_interface.ui'
 ORGANiZATION_ORDERS = _path_to_this + 'organization_orders.ui'
+
+# Driver #
+
+DRIVER_INTERFACE = _path_to_this + 'driver_interface.ui'
