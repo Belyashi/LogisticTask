@@ -9,7 +9,7 @@ class Users(Db):
             'FROM Users '
             'WHERE login = %s'
         )
-        cur = self.execute(query, login)
+        cur = self.execute(query, (login,))
         rows = cur.fetchall()
         cur.close()
 
@@ -33,6 +33,7 @@ class Users(Db):
         return res
 
     def register_driver(self, login, password, capacity, last_city_id):
+        """:returns user id"""
         user_id = self.__register_user(login, password)
 
         cur = self.get_cursor()
@@ -42,12 +43,12 @@ class Users(Db):
             'VALUES (%s, %s, %s)'
         )
         cur.execute(query, (user_id, capacity, last_city_id))
-        # self.commit()
         cur.close()
 
         return user_id
 
     def register_organization(self, login, password, name, city_id):
+        """:returns user id"""
         user_id = self.__register_user(login, password)
 
         cur = self.get_cursor()
@@ -57,7 +58,6 @@ class Users(Db):
             'VALUES (%s, %s, %s)'
         )
         cur.execute(query, (user_id, name, city_id))
-        # self.commit()
         cur.close()
 
         return user_id
@@ -74,7 +74,6 @@ class Users(Db):
             'VALUES (%s, %s)'
         )
         cur.execute(query, (login, password))
-        # self.commit()
 
         cur.execute('SELECT id FROM Users WHERE login = %s', (login,))
         user_id = cur.fetchall()[0][0]

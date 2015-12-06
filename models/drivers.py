@@ -67,7 +67,6 @@ class Drivers(Db):
                  'SET on_way = %s '
                  'WHERE id = %s')
         cur = self.execute(query, (on_way, driver_id))
-        # self.commit()
         cur.close()
 
     def __unload_orders(self, driver_id, city_id):
@@ -79,7 +78,6 @@ class Drivers(Db):
                  'SET t2.delivered = TRUE '
                  'WHERE t1.driver_id = %s AND t3.city_id = %s')
         cur = self.execute(query, (driver_id, city_id))
-        self.commit()
         cur.close()
 
     def __set_last_city_id(self, driver_id, last_city_id):
@@ -87,7 +85,6 @@ class Drivers(Db):
                  'SET last_city_id = %s '
                  'WHERE id = %s')
         cur = self.execute(query, (last_city_id, driver_id))
-        # self.commit()
         cur.close()
 
     def __make_performed_next_point(self, driver_id):
@@ -97,7 +94,6 @@ class Drivers(Db):
                  'ORDER BY id '
                  'LIMIT 1')
         cur = self.execute(query, (driver_id,))
-        # self.commit()
         cur.close()
 
     def assign_order(self, driver_id, order_id):
@@ -106,7 +102,6 @@ class Drivers(Db):
                  '(driver_id, order_id) '
                  'VALUES (%s, %s)')
         cur = self.execute(query, (driver_id, order_id))
-        # self.commit()
         cur.close()
 
     def assign_route(self, driver_id, way_id):
@@ -115,5 +110,4 @@ class Drivers(Db):
                  '(driver_id, way_id) '
                  'VALUES (%s, %s)')
         cur = self.execute(query, (driver_id, way_id))
-        # self.commit()
         cur.close()
