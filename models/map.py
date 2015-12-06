@@ -7,9 +7,6 @@ class Map(Db):
 
     def get_all_cities(self):
         cur = self.execute('SELECT id, name FROM Cities')
-        data = [{
-                    'id': id,
-                    'name': name
-                } for id, name in cur]
+        data = self.get_dict_list(['id', 'name'], cur)
         cur.close()
         return data

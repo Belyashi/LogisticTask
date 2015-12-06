@@ -5,7 +5,7 @@ class Organizations(Db):
     def get_goods(self, organization_id):
         sql = 'SELECT id FROM Goods WHERE producer_id = %s'
         cursor = self.execute(sql, (organization_id,))
-        data = [{'good_id': id} for id in cursor]
+        data = self.get_dict_list(['good_id'], cursor)
         cursor.close()
         return data
 
@@ -16,13 +16,12 @@ class Organizations(Db):
             'VALUES (%s, %s, %s, %s, %s) '
         )
         cursor = self.execute(sql, (name, price, organization_id, weight, residue))
-        # self.commit()
         cursor.close()
 
     def get_orders(self, organization_id):
         sql = 'SELECT id FROM Orders WHERE customer_id = %s'
         cursor = self.execute(sql, (organization_id,))
-        data = [{'order_id': id} for id in cursor]
+        data = self.get_dict_list(['order_id'], cursor)
         cursor.close()
         return data
 
@@ -34,7 +33,6 @@ class Organizations(Db):
             'VALUES (%s, FALSE, %s, %s)'
         )
         cursor = self.execute(sql, (organization_id, good_id, count))
-        # self.commit()
         cursor.close()
         # TODO: Manager assigns Driver, Route and so on to Order
 

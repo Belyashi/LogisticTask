@@ -3,14 +3,12 @@ from db import Db
 
 class Drivers(Db):
     def get_available_drivers(self, city_id):
+        # TODO: add order_id parameter
         query = ('SELECT id, capacity '
                  'FROM Drivers '
                  'WHERE on_way = FALSE AND (last_city_id = %s OR last_city_id = NULL)')
         cur = self.execute(query, (city_id,))
-        data = [{
-                    'id': id,
-                    'capacity': capacity
-                } for id, capacity in cur]
+        data = self.get_dict_list(['id', 'capacity'], cur)
         cur.close()
         return data
 
@@ -19,9 +17,7 @@ class Drivers(Db):
                  'FROM DriversOrders '
                  'WHERE driver_id = %s')
         cur = self.execute(query, (driver_id,))
-        data = [{
-                    'order_id': order_id,
-                } for (order_id,) in cur]
+        data = self.get_dict_list(['order_id'], cur)
         cur.close()
         return data
 
@@ -39,11 +35,7 @@ class Drivers(Db):
 
         if len(data) == 0:
             return None
-        return {
-            'id': data[0][0],
-            'start_city_id': data[0][1],
-            'finish_city_id': data[0][2]
-        }
+        return self.get_dict(['id', 'start_city_id', 'finish_city_id'], data[0])
 
     def start_move(self, driver_id):
         self.__get_next_point_or_raise(driver_id)

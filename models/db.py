@@ -16,8 +16,11 @@ class Db(object):
     def get_cursor(self):
         return self.db.cursor()
 
-    def commit(self):
-        return self.db.commit()
+    def get_dict_list(self, columns, cursor):
+        return [self.get_dict(columns, item) for item in cursor]
+
+    def get_dict(self, columns, item):
+        return {k: v for k, v in zip(columns, item)}
 
     def execute(self, query, *args):
         cursor = self.db.cursor()

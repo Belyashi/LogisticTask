@@ -96,10 +96,6 @@ class Users(Db):
     def get_all(self):
         query = 'SELECT id, login FROM Users'
         cur = self.execute(query)
-        data = [{
-                    'id': id,
-                    'login': login
-                }
-                for id, login in cur]
+        data = self.get_dict_list(['id', 'login'], cur)
         cur.close()
         return data
