@@ -68,7 +68,7 @@ CREATE TABLE DriversOrders (
 );
 
 CREATE TABLE Ways (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   start_city_id INT NOT NULL,
   finish_city_id INT NOT NULL,
   length INT NOT NULL,
