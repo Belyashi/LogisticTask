@@ -40,16 +40,3 @@ class Organizations(Db):
         cursor.close()
         if residue < count:
             raise OverflowError('residue must be larger, than count')
-
-
-from users import Users
-
-
-# u = Users()
-# u.register_organization('pompom', 'ololo', 'orgname', 5)
-org = Organizations()
-org.id = 3
-org.get_goods()
-org.add_goods('good_name', 300, 43, 13)
-org.get_orders()
-

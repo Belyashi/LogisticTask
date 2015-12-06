@@ -6,9 +6,10 @@ def create_db():
     db = MySQLdb.connect(host=config.HOST,
                          user=config.USER,
                          passwd=config.PASSWD)
+    db.autocommit(True)
     db.query("DROP DATABASE " + config.NAME)
     db.query("CREATE DATABASE " + config.NAME)
-    db.commit()
+    # db.commit()
     db.close()
 
 
