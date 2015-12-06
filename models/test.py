@@ -44,6 +44,7 @@ def test_drivers_move_2():
     d.start_move(1)
     d.arrive_to_point(1)
 
+
 def test_get_driver_id():
     print d.get_driver_id(4)
 
@@ -54,9 +55,31 @@ m = Map()
 def test_map_get_all_cities():
     print m.get_all_cities()
 
+def test_map_get_all_ways():
+    print m.get_all_ways()
+
 o = Organizations()
+
 
 def test_get_organization_id():
     print o.get_organization_id(2)
 
-test_get_organization_id()
+
+def test_organization_orders():
+    print o.get_orders(1)
+    print o.get_orders(2)
+    print o.get_orders(3)
+
+    o.add_order(3, 2, 3)
+    print o.get_orders(3)
+
+
+def test_organization_goods():
+    print o.get_goods(1)
+    print o.get_goods(2)
+    print o.get_goods(3)
+
+    o.add_goods('telephon', 1500, 3, 20, 30)
+    print o.get_goods(3)
+
+test_map_get_all_ways()
