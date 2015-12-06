@@ -15,6 +15,7 @@ class DriverInterface(QtGui.QWidget):
         self.orders.setModel(self.model)
         self.driver = Drivers()
         self.driver_id = self.driver.get_driver_id(user_id)
+        self.is_moving = None
         self.set_curent_info()
 
         self.notifier.clicked.connect(self.change_state)
@@ -22,8 +23,18 @@ class DriverInterface(QtGui.QWidget):
     def set_current_info(self):
         current_way = self.driver.get_next_point(self.driver_id)
         finish_city = current_way['finish_city']
-        self.driver.get_driver_info(self.driver_id)
+        driver_info = self.driver.get_driver_info(self.driver_id)
+        if driver_info['on_way']:
+            self.is_moving = True
+            self.notifier.setText('Arrive')
+        else:
+            self.is_moving = False
+            self.notifier.setText('Start')
 
     def change_state(self):
-        pass
-
+        if self.is_moving:
+            self.driver.arrive_to_point(self.driver_id)
+            self.set_current_info()
+        else:
+            self.driver.start_move(self.driver_id)
+            self.set_current_info()

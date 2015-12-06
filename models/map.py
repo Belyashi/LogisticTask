@@ -19,3 +19,6 @@ class Map(Db):
 
     def get_city(self, city_id):
         pass
+
+    def get_city_id(self, city_name):
+        pass
