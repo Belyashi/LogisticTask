@@ -30,3 +30,7 @@ d = Drivers()
 #
 # print d.get_next_point(2)
 # print d.get_next_point(3)
+
+print d.get_next_point(1)
+d.start_move(1)
+d.arrive_to_point(1)
