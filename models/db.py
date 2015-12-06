@@ -8,6 +8,7 @@ class Db(object):
                                   user=config.USER,
                                   passwd=config.PASSWD,
                                   db=config.NAME)
+        self.db.autocommit(True)
 
     def __del__(self):
         self.db.close()

@@ -42,7 +42,7 @@ class Users(Db):
             'VALUES (%s, %s, %s)'
         )
         cur.execute(query, (user_id, capacity, last_city_id))
-        self.commit()
+        # self.commit()
         cur.close()
 
         return user_id
@@ -57,7 +57,7 @@ class Users(Db):
             'VALUES (%s, %s, %s)'
         )
         cur.execute(query, (user_id, name, city_id))
-        self.commit()
+        # self.commit()
         cur.close()
 
         return user_id
@@ -74,7 +74,7 @@ class Users(Db):
             'VALUES (%s, %s)'
         )
         cur.execute(query, (login, password))
-        self.commit()
+        # self.commit()
 
         cur.execute('SELECT id FROM Users WHERE login = %s', (login,))
         user_id = cur.fetchall()[0][0]
