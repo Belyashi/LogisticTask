@@ -2,6 +2,14 @@ from db import Db
 
 
 class Organizations(Db):
+    def get_organization_id(self, user_id):
+        cur = self.execute('SELECT id FROM Organizations WHERE user_id = %s', (user_id, ))
+        data = cur.fetchall()
+        cur.close()
+        if len(data) == 0:
+            ValueError('Organization with user_id = %d does not exist' % user_id)
+        return data[0][0]
+
     def get_goods(self, organization_id):
         sql = 'SELECT id FROM Goods WHERE producer_id = %s'
         cursor = self.execute(sql, (organization_id,))

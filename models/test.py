@@ -1,6 +1,7 @@
 from users import Users
 from drivers import Drivers
 from map import Map
+from organizations import Organizations
 import create_db
 
 
@@ -43,9 +44,19 @@ def test_drivers_move_2():
     d.start_move(1)
     d.arrive_to_point(1)
 
+def test_get_driver_id():
+    print d.get_driver_id(4)
+
 
 m = Map()
 
 
 def test_map_get_all_cities():
     print m.get_all_cities()
+
+o = Organizations()
+
+def test_get_organization_id():
+    print o.get_organization_id(2)
+
+test_get_organization_id()

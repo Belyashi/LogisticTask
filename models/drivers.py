@@ -2,6 +2,14 @@ from db import Db
 
 
 class Drivers(Db):
+    def get_driver_id(self, user_id):
+        cur = self.execute('SELECT id FROM Drivers WHERE user_id = %s', (user_id, ))
+        data = cur.fetchall()
+        cur.close()
+        if len(data) == 0:
+            ValueError('Driver with user_id = %d does not exist' % user_id)
+        return data[0][0]
+
     def get_available_drivers(self, city_id):
         # TODO: add order_id parameter
         query = ('SELECT id, capacity '
