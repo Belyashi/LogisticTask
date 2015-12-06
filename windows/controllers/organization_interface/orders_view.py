@@ -14,6 +14,8 @@ class OrdersView(QtGui.QWidget):
         self.stacked_widget = stacked_widget
         self.stacked_widget.addWidget(self)
         self.ancestor = args[0]
+        self.organization = self.ancestor.organization
+        self.organization_id = self.ancestor.organization_id
         self.orders_adder = OrderAdder(stacked_widget, self)
 
         self.add.clicked.connect(self.add_order)
