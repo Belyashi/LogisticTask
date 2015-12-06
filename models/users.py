@@ -32,16 +32,16 @@ class Users(Db):
         cur.close()
         return res
 
-    def register_driver(self, login, password, capacity, location_city_id):
+    def register_driver(self, login, password, capacity, last_city_id):
         user_id = self.__register_user(login, password)
 
         cur = self.get_cursor()
         query = (
             'INSERT INTO Drivers '
-            '(user_id, capacity, location_city_id) '
+            '(user_id, capacity, last_city_id) '
             'VALUES (%s, %s, %s)'
         )
-        cur.execute(query, (user_id, capacity, location_city_id))
+        cur.execute(query, (user_id, capacity, last_city_id))
         self.commit()
         cur.close()
 

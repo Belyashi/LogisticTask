@@ -20,7 +20,7 @@ class Db(object):
 
     def execute(self, query, *args):
         cursor = self.db.cursor()
-        cursor.execute(query, args)
+        cursor.execute(query, *args)
         return cursor
 
     def execute_script(self, sql_script, *args):

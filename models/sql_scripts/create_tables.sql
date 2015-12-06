@@ -25,10 +25,11 @@ CREATE TABLE Drivers (
   id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
   capacity INT NOT NULL,
-  location_city_id INT NOT NULL,
+  last_city_id INT NOT NULL,
+  on_way BOOL NOT NULL DEFAULT FALSE,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES Users(id),
-  FOREIGN KEY (location_city_id) REFERENCES Cities(id)
+  FOREIGN KEY (last_city_id) REFERENCES Cities(id)
 );
 
 CREATE TABLE Goods (
@@ -78,7 +79,7 @@ CREATE TABLE Ways (
 );
 
 CREATE TABLE Routes (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   driver_id INT NOT NULL,
   way_id INT NOT NULL,
   performed BOOL NOT NULL,
