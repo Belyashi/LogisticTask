@@ -27,4 +27,3 @@ class DriverForm(QtGui.QWidget):
             return {
                 'success': False
             }
-

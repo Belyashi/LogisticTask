@@ -16,3 +16,9 @@ class MainWindow(QtGui.QMainWindow):
 
     def close_sign_up(self):
         self.setCentralWidget(LoginWidget(self))
+
+    def successful_sign_in(self, user_id):
+        dial = QtGui.QDialog(self)
+        label = QtGui.QLabel(dial)
+        label.setText('Signed in')
+        dial.show()
