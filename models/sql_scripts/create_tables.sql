@@ -6,13 +6,13 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Cities(
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(20) NOT NULL,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE Organizations (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(20) NOT NULL,
   user_id INT NOT NULL,
   city_id INT NOT NULL,

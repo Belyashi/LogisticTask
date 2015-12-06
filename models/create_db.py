@@ -25,5 +25,8 @@ def create_tables():
     db.close()
 
 
-create_db()
-create_tables()
+import sys
+
+if len(sys.argv) > 1 and sys.argv[1] == 'create':
+    create_db()
+    create_tables()

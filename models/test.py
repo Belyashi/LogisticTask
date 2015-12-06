@@ -1,9 +1,8 @@
 from users import Users
+import create_db
 
 
-users = Users()
-users.register('lola', 'passlol')
-users.register('lol2', 'passlol2')
-users.register('lol3', 'passlol3')
+def recreate_db():
+    create_db.create_db()
+    create_db.create_tables()
 
-print users.get_all()

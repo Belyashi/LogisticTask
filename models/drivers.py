@@ -2,6 +2,12 @@ from db import Db
 
 
 class Drivers(Db):
+    def get_available_drivers(self):
+        pass
+
+    def get_orders(self):
+        pass
+
     def get_next_point(self):
         pass
 
@@ -9,12 +15,6 @@ class Drivers(Db):
         pass
 
     def arrive_to_point(self):
-        pass
-
-    def get_orders(self):
-        pass
-
-    def get_available_drivers(self):
         pass
 
     def assign_order(self):
