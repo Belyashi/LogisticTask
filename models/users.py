@@ -20,6 +20,18 @@ class Users(Db):
         else:
             return rows[0][0]
 
+    def is_driver(self, user_id):
+        cur = self.execute('SELECT id FROM Drivers WHERE user_id = %s', (user_id,))
+        res = cur.rowcount > 0
+        cur.close()
+        return res
+
+    def is_organization(self, user_id):
+        cur = self.execute('SELECT id FROM Organizations WHERE user_id = %s', (user_id,))
+        res = cur.rowcount > 0
+        cur.close()
+        return res
+
     def register_driver(self, login, password, capacity, location_city_id):
         user_id = self.__register_user(login, password)
 
