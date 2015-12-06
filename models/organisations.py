@@ -28,7 +28,12 @@ class Organizations(Db):
 
     def add_order(self, good_id, count):
         self.__check_overflow_count(good_id, count)
-        cursor = self.execute_script('add_order', (self.id, good_id, count))
+        sql = (
+            'INSERT INTO Orders'
+            '(customer_id, delivered, goods_id, count)'
+            'VALUES (%s, FALSE, %s, %s)'
+        )
+        cursor = self.execute(sql, (self.id, good_id, count))
         # self.commit()
         cursor.close()
         # TODO: Manager assigns Driver, Route and so on to Order
