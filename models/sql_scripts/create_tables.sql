@@ -46,17 +46,11 @@ CREATE TABLE Goods (
 CREATE TABLE Orders (
   id INT NOT NULL AUTO_INCREMENT,
   customer_id INT NOT NULL,
-  delivered BOOL NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (customer_id) REFERENCES Organizations(id)
-);
-
-CREATE TABLE OrdersGoods (
-  order_id INT NOT NULL,
+  delivered BOOL NOT NULL DEFAULT FALSE,
   goods_id INT NOT NULL,
   count INT NOT NULL,
-  PRIMARY KEY (order_id, goods_id),
-  FOREIGN KEY (order_id) REFERENCES Orders(id),
+  PRIMARY KEY (id),
+  FOREIGN KEY (customer_id) REFERENCES Organizations(id),
   FOREIGN KEY (goods_id) REFERENCES Goods(id)
 );
 
@@ -82,7 +76,7 @@ CREATE TABLE Routes (
   id INT NOT NULL AUTO_INCREMENT,
   driver_id INT NOT NULL,
   way_id INT NOT NULL,
-  performed BOOL NOT NULL,
+  performed BOOL NOT NULL DEFAULT FALSE,
   PRIMARY KEY (id),
   FOREIGN KEY (driver_id) REFERENCES Drivers(id),
   FOREIGN KEY (way_id) REFERENCES Ways(id)
