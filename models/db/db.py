@@ -1,13 +1,13 @@
 import MySQLdb
-import config
+import models.config
 
 
 class Db(object):
     def __init__(self):
-        self.db = MySQLdb.connect(host=config.HOST,
-                                  user=config.USER,
-                                  passwd=config.PASSWD,
-                                  db=config.NAME)
+        self.db = MySQLdb.connect(host=models.config.HOST,
+                                  user=models.config.USER,
+                                  passwd=models.config.PASSWD,
+                                  db=models.config.NAME)
         self.db.autocommit(True)
 
     def __del__(self):

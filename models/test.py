@@ -1,8 +1,7 @@
-from users import Users
 from drivers import Drivers
 from map import Map
+from models.db import create_db
 from organizations import Organizations
-import create_db
 
 
 def recreate_db():

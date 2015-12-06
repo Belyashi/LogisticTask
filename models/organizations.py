@@ -1,4 +1,4 @@
-from db import Db
+from models.db.db import Db
 
 
 class Organizations(Db):
