@@ -32,7 +32,7 @@ class GoodAdder(QtGui.QWidget):
             self.organization.add_goods(
                 name,
                 price,
-                self.parent().organization_id,
+                self.ancestor.organization_id,
                 residue,
                 weight
             )

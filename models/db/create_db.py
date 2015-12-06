@@ -1,6 +1,12 @@
+import os
 import MySQLdb
 
 import models.db.config
+
+_path_to_scripts = '/'.join(
+        os.path.abspath(__file__).split('/')[:-2]
+        + ['sql_scripts']
+    ) + '/'
 
 
 def create_db():
@@ -19,7 +25,7 @@ def create_tables():
                          user=models.db.config.USER,
                          passwd=models.db.config.PASSWD,
                          db=models.db.config.NAME)
-    with open("./sql_scripts/create_tables.sql", "r") as f:
+    with open(_path_to_scripts + "create_tables.sql", "r") as f:
         sql = f.read()
     cur = db.cursor()
     cur.execute(sql)
@@ -32,7 +38,7 @@ def make_test_data():
                          passwd=models.db.config.PASSWD,
                          db=models.db.config.NAME)
     db.autocommit(True)
-    with open("./sql_scripts/test_data.sql", "r") as f:
+    with open(_path_to_scripts + "test_data.sql", "r") as f:
         sql = f.read()
     cur = db.cursor()
     cur.execute(sql)
