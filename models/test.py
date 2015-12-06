@@ -55,6 +55,8 @@ m = Map()
 def test_map_get_all_cities():
     print m.get_all_cities()
 
+def test_map_get_all_ways():
+    print m.get_all_ways()
 
 o = Organizations()
 
@@ -79,3 +81,5 @@ def test_organization_goods():
 
     o.add_goods('telephon', 1500, 3, 20, 30)
     print o.get_goods(3)
+
+test_map_get_all_ways()
