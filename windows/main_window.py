@@ -1,6 +1,6 @@
 from PyQt4 import QtGui
 
-from windows.controllers import LoginWidget, SignUpWidget
+from windows.controllers import LoginWidget, SignUpWidget, OrganizationInterface
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -9,7 +9,8 @@ class MainWindow(QtGui.QMainWindow):
         self.setGeometry(600, 300, 500, 100)
         self.setWindowTitle('Logistic Task')
 
-        self.setCentralWidget(LoginWidget(self))
+        # self.setCentralWidget(LoginWidget(self))
+        self.setCentralWidget(OrganizationInterface(self))
 
     def sign_up_user(self):
         self.setCentralWidget(SignUpWidget(self))
