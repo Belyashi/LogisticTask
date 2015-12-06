@@ -14,5 +14,5 @@ class MainWindow(QtGui.QMainWindow):
     def sign_up_user(self):
         self.setCentralWidget(SignUpWidget(self))
 
-    def cancel_sign_up(self):
+    def close_sign_up(self):
         self.setCentralWidget(LoginWidget(self))
