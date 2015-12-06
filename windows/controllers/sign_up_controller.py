@@ -34,9 +34,9 @@ class SignUpWidget(QtGui.QWidget):
             self.additional_data.setCurrentWidget(self._company_form)
 
     def sign_up_user(self):
-        login = self.login_input.toPlainText()
-        password = self.password_input.toPlainText()
-        repeated_password = self.repeated_password.toPlainText()
+        login = self.login_input.text()
+        password = self.password_input.text()
+        repeated_password = self.repeated_password.text()
         data = self.additional_data.currentWidget().get_data()
         if data['success'] and password == repeated_password and len(login) > 0:
             role = self.role_selector.currentText()

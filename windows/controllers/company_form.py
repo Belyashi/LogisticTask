@@ -11,8 +11,8 @@ class CompanyForm(QtGui.QWidget):
         uic.loadUi(self._path, self)
 
     def get_data(self):
-        name = self.company.toPlainText()
-        location = self.location.toPlainText()
+        name = self.company.text()
+        location = self.location.text()
         # FIXME: add check for name uniqueness and location
         if name and location:
             return {

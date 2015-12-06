@@ -20,8 +20,8 @@ class LoginWidget(QtGui.QWidget):
         self.sign_up.clicked.connect(self.handle_sign_up)
 
     def handle_sign_in(self):
-        login = self.login_field.toPlainText()
-        password = self.password_field.toPlainText()
+        login = self.login_field.text()
+        password = self.password_field.text()
         try:
             result = self.users.login(login, password)
         except ValueError as v:

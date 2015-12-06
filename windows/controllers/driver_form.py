@@ -12,7 +12,7 @@ class DriverForm(QtGui.QWidget):
 
     def get_data(self):
         try:
-            capacity = int(self.capacity.toPlainText())
+            capacity = int(self.capacity.text())
         except Exception:
             capacity = -1
         location = self.location.toPlainText()
