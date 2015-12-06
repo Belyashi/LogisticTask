@@ -2,6 +2,17 @@ from models.db.db import Db
 
 
 class Drivers(Db):
+    def get_driver_info(self, driver_id):
+        query = (
+            'SELECT user_id, capacity, last_city_id, on_way '
+            'FROM Drivers '
+            'WHERE id = %s '
+        )
+        cur = self.execute(query, (driver_id,))
+        data = self.get_dict_list(['user_id', 'capacity', 'last_city_id', 'on_way'], cur)
+        data[0]['on_way'] = bool(data[0]['on_way'])
+        return data
+
     def get_driver_id(self, user_id):
         cur = self.execute('SELECT id FROM Drivers WHERE user_id = %s', (user_id, ))
         data = cur.fetchall()
