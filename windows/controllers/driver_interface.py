@@ -16,7 +16,7 @@ class DriverInterface(QtGui.QWidget):
         self.driver = Drivers()
         self.driver_id = self.driver.get_driver_id(user_id)
         self.is_moving = None
-        self.set_curent_info()
+        self.set_current_info()
 
         self.notifier.clicked.connect(self.change_state)
 

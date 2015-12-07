@@ -15,7 +15,7 @@ class DriverForm(QtGui.QWidget):
             capacity = int(self.capacity.text())
         except Exception:
             capacity = -1
-        location = self.location.toPlainText()
+        location = self.location.text()
         # FIXME: make normal check of location
         if capacity >= 1 and location:
             return {
