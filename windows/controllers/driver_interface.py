@@ -11,8 +11,6 @@ class DriverInterface(QtGui.QWidget):
     def __init__(self, user_id, *args, **kwargs):
         super(DriverInterface, self).__init__(*args, **kwargs)
         uic.loadUi(self._path, self)
-        self.model = QtGui.QStandardItemModel()
-        self.orders.setModel(self.model)
         self.driver = Drivers()
         self.driver_id = self.driver.get_driver_id(user_id)
         self.is_moving = None
@@ -24,12 +22,13 @@ class DriverInterface(QtGui.QWidget):
         current_way = self.driver.get_next_point(self.driver_id)
         finish_city = current_way['finish_city']
         driver_info = self.driver.get_driver_info(self.driver_id)
-        if driver_info['on_way']:
+        if True:  # driver_info['on_way']:
             self.is_moving = True
             self.notifier.setText('Arrive')
         else:
             self.is_moving = False
             self.notifier.setText('Start')
+        self.update_state()
 
     def change_state(self):
         if self.is_moving:
@@ -38,3 +37,9 @@ class DriverInterface(QtGui.QWidget):
         else:
             self.driver.start_move(self.driver_id)
             self.set_current_info()
+
+    def update_state(self):
+        self.orders.clear()
+        orders = self.driver.get_orders(self.driver_id)
+        for order in orders:
+            self.orders.addItem(str(order))
