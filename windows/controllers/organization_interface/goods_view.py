@@ -38,21 +38,21 @@ class GoodsView(QtGui.QWidget):
 
     def update_info(self):
         goods = Goods().get_all_goods()
-        # goods = filter(
-        #     lambda x: x['producer_id'] == self.organization_id,
-        #     goods
-        # )
-        # for good in goods:
-        #     good.pop('producer_id')
-        # self.model.clear()
-        # header_labels = [key for key in goods[0]] if len(goods) > 0 else\
-        #     ['id', 'name', 'weight', 'price', 'residue']
-        # self.model.setVerticalHeaderLabels(header_labels)
-        # row_count = 0
-        # for good in goods:
-        #     column_count = 0
-        #     for key, value in good:
-        #         self.model.setItem(row_count, column_count,
-        #                       QtGui.QStandardItem(value))
-        #         column_count += 1
-        #     row_count += 1
+        goods = filter(
+            lambda x: x['producer_id'] == self.organization_id,
+            goods
+        )
+        for good in goods:
+            good.pop('producer_id')
+        self.model.clear()
+        header_labels = [key for key in goods[0]] if len(goods) > 0 else\
+            ['id', 'name', 'weight', 'price', 'residue']
+        self.model.setHorizontalHeaderLabels(header_labels)
+        row_count = 0
+        for good in goods:
+            column_count = 0
+            for key, value in good.iteritems():
+                self.model.setItem(row_count, column_count,
+                              QtGui.QStandardItem(str(value)))
+                column_count += 1
+            row_count += 1

@@ -60,7 +60,7 @@
     </widget>
    </item>
    <item row="1" column="0" colspan="2">
-    <widget class="QColumnView" name="goods_view"/>
+    <widget class="QTableView" name="goods_view"/>
    </item>
   </layout>
  </widget>
