@@ -14,13 +14,15 @@ class DriverInterface(QtGui.QWidget):
         self.driver = Drivers()
         self.driver_id = self.driver.get_driver_id(user_id)
         self.is_moving = None
+        self.model = QtGui.QStandardItemModel()
+        self.orders.setModel(self.model)
         self.set_current_info()
 
         self.notifier.clicked.connect(self.change_state)
 
     def set_current_info(self):
         current_way = self.driver.get_next_point(self.driver_id)
-        finish_city = current_way['finish_city']
+        finish_city = current_way['finish_city'] if current_way else ''
         driver_info = self.driver.get_driver_info(self.driver_id)
         if True:  # driver_info['on_way']:
             self.is_moving = True
@@ -39,7 +41,16 @@ class DriverInterface(QtGui.QWidget):
             self.set_current_info()
 
     def update_state(self):
-        self.orders.clear()
         orders = self.driver.get_orders(self.driver_id)
+        self.model.clear()
+        header_labels = [key for key in orders[0]] if len(orders) > 0 else\
+            ['id']
+        self.model.setHorizontalHeaderLabels(header_labels)
+        row_count = 0
         for order in orders:
-            self.orders.addItem(str(order))
+            column_count = 0
+            for key, value in order.iteritems():
+                self.model.setItem(row_count, column_count,
+                                   QtGui.QStandardItem(str(value)))
+                column_count += 1
+            row_count += 1

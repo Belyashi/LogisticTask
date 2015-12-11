@@ -33,14 +33,13 @@ class Drivers(Db):
 
     def get_orders(self, driver_id):
         query = (
-            'SELECT order_id,'
-            '(select delivered, count,'
-            '(select name from Organizations '
-            'where id=Orders.customer_id limit 1)'
-            '(select name from Goods where id=Orders.goods_id limit 1)'
-            'from Orders where id=DriverOrders.order_id)'
-            'FROM DriversOrders '
-            'WHERE driver_id = %s'
+            'select id, delivered, count, '
+                '(select name from Organizations '
+                'where id=Orders.customer_id limit 1), '
+                '(select name from Goods where id=Orders.goods_id limit 1) '
+            'from Orders where id in '
+            '(select order_id from DriversOrders '
+            'where driver_id=%s) '
         )
         cur = self.execute(query, (driver_id,))
         data = self.get_dict_list(['order_id', 'delivered', 'count', 'customer', 'good'], cur)
@@ -48,7 +47,11 @@ class Drivers(Db):
         return data
 
     def get_next_point(self, driver_id):
-        query = ('SELECT t1.id, t2.start_city_id, t2.finish_city_id '
+        query = ('SELECT t1.id, t2.start_city_id, t2.finish_city_id, '
+                 '(select name from Cities where id=t2.start_city_id) '
+                 'as start_city, '
+                 '(select name from Cities where id=t2.finish_city_id) '
+                 'as finish_city '
                  'FROM Routes as t1'
                  '  INNER JOIN Ways as t2'
                  '     ON t1.way_id = t2.id '
@@ -61,7 +64,13 @@ class Drivers(Db):
 
         if len(data) == 0:
             return None
-        return self.get_dict(['id', 'start_city_id', 'finish_city_id'], data[0])
+        return self.get_dict(
+            [
+                'id', 'start_city_id', 'finish_city_id',
+                'start_city', 'finish_city'
+            ],
+            data[0]
+        )
 
     def start_move(self, driver_id):
         self.__get_next_point_or_raise(driver_id)

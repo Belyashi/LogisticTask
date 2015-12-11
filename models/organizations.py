@@ -28,9 +28,9 @@ class Organizations(Db):
 
     def get_orders(self, organization_id):
         sql = (
-            'SELECT order_id, delivered, count,'
-            '(select name from Goods'
-            'where id=Orders.goods_id limit 1)'
+            'SELECT id, delivered, count, '
+            '(select name from Goods '
+            'where id=Orders.goods_id limit 1) '
             'FROM Orders '
             'WHERE customer_id = %s'
         )
