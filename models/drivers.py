@@ -32,11 +32,18 @@ class Drivers(Db):
         return data
 
     def get_orders(self, driver_id):
-        query = ('SELECT order_id '
-                 'FROM DriversOrders '
-                 'WHERE driver_id = %s')
+        query = (
+            'SELECT order_id,'
+            '(select delivered, count,'
+            '(select name from Organizations '
+            'where id=Orders.customer_id limit 1)'
+            '(select name from Goods where id=Orders.goods_id limit 1)'
+            'from Orders where id=DriverOrders.order_id)'
+            'FROM DriversOrders '
+            'WHERE driver_id = %s'
+        )
         cur = self.execute(query, (driver_id,))
-        data = self.get_dict_list(['order_id'], cur)
+        data = self.get_dict_list(['order_id', 'delivered', 'count', 'customer', 'good'], cur)
         cur.close()
         return data
 

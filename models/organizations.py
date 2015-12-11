@@ -27,9 +27,15 @@ class Organizations(Db):
         cursor.close()
 
     def get_orders(self, organization_id):
-        sql = 'SELECT id FROM Orders WHERE customer_id = %s'
+        sql = (
+            'SELECT order_id, delivered, count,'
+            '(select name from Goods'
+            'where id==Orders.goods_id limit 1)'
+            'FROM Orders '
+            'WHERE customer_id = %s'
+        )
         cursor = self.execute(sql, (organization_id,))
-        data = self.get_dict_list(['order_id'], cursor)
+        data = self.get_dict_list(['order_id', 'delivered', 'count', 'good'], cursor)
         cursor.close()
         return data
 
