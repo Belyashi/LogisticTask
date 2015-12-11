@@ -18,7 +18,19 @@ class Map(Db):
         return data
 
     def get_city(self, city_id):
-        pass
+        query = 'SELECT name FROM Cities WHERE id = %s'
+        cur = self.execute(query, (city_id,))
+        data = cur.fetchall()
+        cur.close()
+        if len(data) == 0:
+            raise Exception('no such city id')
+        return data[0][0]
 
     def get_city_id(self, city_name):
-        pass
+        query = 'SELECT id FROM Cities WHERE name = %s'
+        cur = self.execute(query, (city_name,))
+        data = cur.fetchall()
+        cur.close()
+        if len(data) == 0:
+            raise Exception('no such city name')
+        return data[0][0]

@@ -2,9 +2,16 @@ from models.db.db import Db
 
 
 class Drivers(Db):
-
     def get_driver_info(self, driver_id):
-        pass
+        query = (
+            'SELECT user_id, capacity, last_city_id, on_way '
+            'FROM Drivers '
+            'WHERE id = %s '
+        )
+        cur = self.execute(query, (driver_id,))
+        data = self.get_dict_list(['user_id', 'capacity', 'last_city_id', 'on_way'], cur)
+        data[0]['on_way'] = bool(data[0]['on_way'])
+        return data
 
     def get_driver_id(self, user_id):
         cur = self.execute('SELECT id FROM Drivers WHERE user_id = %s', (user_id, ))
@@ -25,11 +32,18 @@ class Drivers(Db):
         return data
 
     def get_orders(self, driver_id):
-        query = ('SELECT order_id '
-                 'FROM DriversOrders '
-                 'WHERE driver_id = %s')
+        query = (
+            'SELECT order_id,'
+            '(select delivered, count,'
+            '(select name from Organizations '
+            'where id=Orders.customer_id limit 1)'
+            '(select name from Goods where id=Orders.goods_id limit 1)'
+            'from Orders where id=DriverOrders.order_id)'
+            'FROM DriversOrders '
+            'WHERE driver_id = %s'
+        )
         cur = self.execute(query, (driver_id,))
-        data = self.get_dict_list(['order_id'], cur)
+        data = self.get_dict_list(['order_id', 'delivered', 'count', 'customer', 'good'], cur)
         cur.close()
         return data
 
