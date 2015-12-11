@@ -4,14 +4,16 @@ from models.db.db import Db
 class Drivers(Db):
     def get_driver_info(self, driver_id):
         query = (
-            'SELECT user_id, capacity, last_city_id, on_way '
+            'SELECT user_id, capacity, '
+            '(select name from Cities where id=Drivers.last_city_id limit 1), '
+            'on_way '
             'FROM Drivers '
             'WHERE id = %s '
         )
         cur = self.execute(query, (driver_id,))
-        data = self.get_dict_list(['user_id', 'capacity', 'last_city_id', 'on_way'], cur)
+        data = self.get_dict_list(['user_id', 'capacity', 'last_city', 'on_way'], cur)
         data[0]['on_way'] = bool(data[0]['on_way'])
-        return data
+        return data[0]
 
     def get_driver_id(self, user_id):
         cur = self.execute('SELECT id FROM Drivers WHERE user_id = %s', (user_id, ))
