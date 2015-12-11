@@ -1,5 +1,7 @@
 from collections import defaultdict
 
+from map import Map
+
 
 class Graph:
     def __init__(self):
@@ -15,7 +17,8 @@ class Graph:
         self.distances[(from_node, to_node)] = distance
 
 
-def dijsktra(graph, initial, destination):
+def dijsktra(initial, destination):
+    graph = __make_graph()
     visited = {initial: 0}
     path = {}
 
@@ -49,3 +52,20 @@ def dijsktra(graph, initial, destination):
     result.append(initial)
     result.reverse()
     return result
+
+
+def __make_graph():
+    if hasattr(__make_graph, 'graph'):
+        return __make_graph.graph
+    graph = Graph()
+    mp = Map()
+    ways = mp.get_all_ways()
+    for way in ways:
+        start_city_id = way['start_city_id']
+        finish_city_id = way['finish_city_id']
+        length = way['length']
+        graph.add_node(start_city_id)
+        graph.add_node(finish_city_id)
+        graph.add_edge(start_city_id, finish_city_id, length)
+    setattr(__make_graph, 'graph', graph)
+    return __make_graph.graph

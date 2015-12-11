@@ -150,7 +150,7 @@ class Drivers(Db):
 
     def __get_way_id(self, start_city_id, finish_city_id):
         query = (
-            'SELECT id FROM WAYS '
+            'SELECT MIN(id) FROM WAYS '
             'FROM WAYS '
             'WHERE start_city_id = %s AND finish_city_id = %s '
         )
