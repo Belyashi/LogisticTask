@@ -12,9 +12,7 @@ class Graph:
 
     def add_edge(self, from_node, to_node, distance):
         self.edges[from_node].append(to_node)
-        self.edges[to_node].append(from_node)
         self.distances[(from_node, to_node)] = distance
-        self.distances[(to_node, from_node)] = distance
 
 
 def dijsktra(graph, initial, destination):
@@ -51,26 +49,3 @@ def dijsktra(graph, initial, destination):
     result.append(initial)
     result.reverse()
     return result
-
-
-if __name__ == '__main__':
-
-    g = Graph()
-    for i in xrange(1, 11):
-        g.add_node(i)
-    g.add_edge(1, 2, 1)
-    g.add_edge(1, 3, 11)
-    g.add_edge(1, 4, 11)
-    g.add_edge(1, 5, 11)
-    g.add_edge(2, 7, 10)
-    g.add_edge(3, 8, 50)
-    g.add_edge(4, 6, 6)
-    g.add_edge(4, 10, 15)
-    g.add_edge(5, 9, 12)
-    g.add_edge(6, 9, 7)
-    g.add_edge(7, 8, 20)
-    g.add_edge(9, 10, 1)
-    g.add_edge(10, 8, 6)
-
-    start, end = 1, 8
-    print dijsktra(g, start, end)
