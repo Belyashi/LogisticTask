@@ -30,7 +30,7 @@ class Organizations(Db):
         sql = (
             'SELECT order_id, delivered, count,'
             '(select name from Goods'
-            'where id==Orders.goods_id limit 1)'
+            'where id=Orders.goods_id limit 1)'
             'FROM Orders '
             'WHERE customer_id = %s'
         )
