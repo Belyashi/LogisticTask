@@ -28,8 +28,8 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="QLineEdit" name="location">
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="company">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -44,8 +44,8 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="company">
+   <item row="3" column="1">
+    <widget class="QComboBox" name="location">
      <property name="minimumSize">
       <size>
        <width>0</width>
