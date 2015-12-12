@@ -13,30 +13,30 @@ class Organizations(Db):
         return data[0][0]
 
     def get_goods(self, organization_id):
-        sql = 'SELECT id FROM Goods WHERE producer_id = %s'
-        cursor = self.execute(sql, (organization_id,))
+        query = 'SELECT id FROM Goods WHERE producer_id = %s'
+        cursor = self.execute(query, (organization_id,))
         data = self.get_dict_list(['good_id'], cursor)
         cursor.close()
         return data
 
     def add_goods(self, name, price, organization_id, weight, residue):
-        sql = (
+        query = (
             'INSERT INTO Goods '
             '(name, price, producer_id, weight, residue) '
             'VALUES (%s, %s, %s, %s, %s) '
         )
-        cursor = self.execute(sql, (name, price, organization_id, weight, residue))
+        cursor = self.execute(query, (name, price, organization_id, weight, residue))
         cursor.close()
 
     def get_orders(self, organization_id):
-        sql = (
+        query = (
             'SELECT id, delivered, count, '
             '(select name from Goods '
             'where id=Orders.goods_id) '
             'FROM Orders '
             'WHERE customer_id = %s'
         )
-        cursor = self.execute(sql, (organization_id,))
+        cursor = self.execute(query, (organization_id,))
         data = self.get_dict_list(['order_id', 'delivered', 'count', 'good'], cursor)
         cursor.close()
         return data
