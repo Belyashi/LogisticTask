@@ -1,7 +1,7 @@
 CREATE TABLE Users (
   id INT NOT NULL AUTO_INCREMENT,
-  login VARCHAR(64) NOT NULL,
-  pass VARCHAR(20) NOT NULL,
+  login VARCHAR(20) NOT NULL,
+  pass VARCHAR(64) NOT NULL,
   PRIMARY KEY (id, login)
 );
 
