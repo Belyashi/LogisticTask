@@ -12,12 +12,12 @@ INSERT INTO Ways (start_city_id, finish_city_id, length) VALUES (2, 4, 300);
 INSERT INTO Ways (start_city_id, finish_city_id, length) VALUES (3, 5, 10);
 
 ##passwords
-INSERT INTO Users (login, pass) VALUES ("vasia", "78d8045d684abd2eece923758f3cd781489df3a48e1278982466017f");  ##123
-INSERT INTO Users (login, pass) VALUES ("masha", "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319");  ##1234
-INSERT INTO Users (login, pass) VALUES ("petia", "fa537e8a03f79fb79f065eb12e84df781537f3c7f2a7c16069f90341");  #321
-INSERT INTO Users (login, pass) VALUES ("sasha", "2b88818c9e8511ae74d9add26c7e9d5380a2ae7c2eee4d9ca84d0649");  #111
-INSERT INTO Users (login, pass) VALUES ("ivan", "1dc1c160284a5b1d5cbb04f6856c4c34806d33ceee7158b426821beb");   #121
-INSERT INTO Users (login, pass) VALUES ("userus", "ea8fd8d3be56627a2dbca5c0dabb2cc14190e20f45ebd2c0b33b6e44"); #4321
+INSERT INTO Users (login, pass) VALUES ("vasia", "a8ea357a8595a0479744e23171f5935e5abbe5a1dcfd3752ae2c4c39");  ##123
+INSERT INTO Users (login, pass) VALUES ("masha", "b7e718e93f99931c468f94d648636153bc3d7960384d8a87f9941c61");  ##1234
+INSERT INTO Users (login, pass) VALUES ("petia", "4f3045a771449645f86b4fb47313186b1214cfa448af7cf78cf9835a");  #321
+INSERT INTO Users (login, pass) VALUES ("sasha", "dcd0a6fc86fc0274ce90e2e1c6799295474cffbedf9c4d0bcf6581cd");  #111
+INSERT INTO Users (login, pass) VALUES ("ivan", "0ddaf435b2c3f0d6c5eb18d1f17b4058f9c0264a7599179fd8617b93");   #121
+INSERT INTO Users (login, pass) VALUES ("userus", "451d0956af24514beb2908fd75eb3f607480253be5c584d335058937"); #4321
 
 INSERT INTO Drivers (user_id, capacity, last_city_id) VALUES (1, 100, 1);
 INSERT INTO Drivers (user_id, capacity, last_city_id) VALUES (3, 150, 2);
