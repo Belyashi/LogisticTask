@@ -68,8 +68,8 @@ class Organizations(Db):
         self.__assign_way(driver_id, producer_city_id, finish_city_id)
 
     def __check_overflow_count(self, good_id, count):
-        sql = 'SELECT residue FROM Goods WHERE id = %s'
-        cursor = self.execute(sql, (good_id,))
+        query = 'SELECT residue FROM Goods WHERE id = %s'
+        cursor = self.execute(query, (good_id,))
         residue = cursor.fetchall()[0][0]
         cursor.close()
         if residue < count:
@@ -123,20 +123,18 @@ class Organizations(Db):
         path = utils.dijsktra(start_ciy_id, finish_city_id)
         for finish_city_id in path[1:]:
             query = (
-                'INSERT INTO ROUTES '
+                'INSERT INTO Routes '
                 '(driver_id, way_id, performed) '
-                '(%s, %s, %s) '
+                'VALUES (%s, %s, FALSE) '
             )
-            cur = self.execute(
-                query,
-                (driver_id, self.__get_way_id(start_ciy_id, finish_city_id), False)
-            )
+            way_id = self.__get_way_id(start_ciy_id, finish_city_id)
+            cur = self.execute(query, (driver_id, way_id))
             cur.close()
             start_ciy_id = finish_city_id
 
     def __get_way_id(self, start_city_id, finish_city_id):
         query = (
-            'SELECT id FROM WAYS '
+            'SELECT id FROM Ways '
             'WHERE start_city_id = %s AND finish_city_id = %s '
             'limit 1 '
         )
