@@ -10,6 +10,12 @@ INSERT INTO Ways (start_city_id, finish_city_id, length) VALUES (1, 5, 120);
 INSERT INTO Ways (start_city_id, finish_city_id, length) VALUES (2, 3, 200);
 INSERT INTO Ways (start_city_id, finish_city_id, length) VALUES (2, 4, 300);
 INSERT INTO Ways (start_city_id, finish_city_id, length) VALUES (3, 5, 10);
+INSERT INTO Ways (start_city_id, finish_city_id, length) VALUES (2, 1, 100);
+INSERT INTO Ways (start_city_id, finish_city_id, length) VALUES (4, 1, 50);
+INSERT INTO Ways (start_city_id, finish_city_id, length) VALUES (5, 1, 120);
+INSERT INTO Ways (start_city_id, finish_city_id, length) VALUES (3, 2, 200);
+INSERT INTO Ways (start_city_id, finish_city_id, length) VALUES (4, 2, 300);
+INSERT INTO Ways (start_city_id, finish_city_id, length) VALUES (5, 3, 10);
 
 ##passwords
 INSERT INTO Users (login, pass) VALUES ("vasia", "a8ea357a8595a0479744e23171f5935e5abbe5a1dcfd3752ae2c4c39");  ##123
