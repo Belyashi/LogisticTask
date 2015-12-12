@@ -32,7 +32,7 @@ class Organizations(Db):
         sql = (
             'SELECT id, delivered, count, '
             '(select name from Goods '
-            'where id=Orders.goods_id limit 1) '
+            'where id=Orders.goods_id) '
             'FROM Orders '
             'WHERE customer_id = %s'
         )
@@ -83,7 +83,7 @@ class Organizations(Db):
             'AND on_way = FALSE '
             'limit 1'
         )
-        cursor = self.execute(query, city_id)
+        cursor = self.execute(query, (city_id,))
         data = cursor.fetchall()
         cursor.close()
         if len(data) > 0:
@@ -103,9 +103,9 @@ class Organizations(Db):
             'WHERE id = '
                 '(SELECT producer_id '
                 'FROM Goods '
-                'WHERE id = %s) '
+                'WHERE id = %s limit 1) '
         )
-        cur = self.execute(query, good_id)
+        cur = self.execute(query, (good_id,))
         data = cur.fetchall()
         cur.close()
         if len(data) == 0:
@@ -120,7 +120,7 @@ class Organizations(Db):
         cur.close()
 
     def __assign_way(self, driver_id, start_ciy_id, finish_city_id):
-        path = utils.dijsktra(utils.g, start_ciy_id, finish_city_id)
+        path = utils.dijsktra(start_ciy_id, finish_city_id)
         for finish_city_id in path[1:]:
             query = (
                 'INSERT INTO ROUTES '
