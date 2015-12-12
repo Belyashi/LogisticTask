@@ -1,7 +1,5 @@
 from models.db.db import Db
 
-import utils
-
 
 class Drivers(Db):
     def get_driver_info(self, driver_id):
@@ -126,39 +124,3 @@ class Drivers(Db):
                  'LIMIT 1')
         cur = self.execute(query, (driver_id,))
         cur.close()
-
-    def assign_order(self, driver_id, order_id):
-        # TODO: check if possible
-        query = ('INSERT INTO DriversOrders '
-                 '(driver_id, order_id) '
-                 'VALUES (%s, %s)')
-        cur = self.execute(query, (driver_id, order_id))
-        cur.close()
-
-    def assign_way(self, driver_id, start_ciy_id, finish_city_id):
-        path = utils.dijsktra(utils.g, start_ciy_id, finish_city_id)
-        for finish_city_id in path[1:]:
-            query = (
-                'INSERT INTO ROUTES '
-                '(driver_id, way_id, performed) '
-                '(%s, %s, %s) '
-            )
-            cur = self.execute(
-                query,
-                (driver_id, self.__get_way_id(start_ciy_id, finish_city_id), False)
-            )
-            cur.close()
-            start_ciy_id = finish_city_id
-
-    def __get_way_id(self, start_city_id, finish_city_id):
-        query = (
-            'SELECT MIN(id) FROM WAYS '
-            'FROM WAYS '
-            'WHERE start_city_id = %s AND finish_city_id = %s '
-        )
-        cur = self.execute(query, (start_city_id, finish_city_id))
-        data = cur.fetchall()
-        cur.close()
-        if len(data) == 0:
-            raise Exception('no such way id')
-        return data[0][0]

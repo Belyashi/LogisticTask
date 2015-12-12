@@ -12,13 +12,13 @@ def recreate_db():
 d = Drivers()
 
 
-def test_drivers_assign_order():
-    d.assign_order(2, 1)
-    d.assign_order(2, 2)
-    d.assign_order(3, 3)
-    print d.get_orders(1)
-    print d.get_orders(2)
-    print d.get_orders(3)
+# def test_drivers_assign_order():
+#     d.assign_order(2, 1)
+#     d.assign_order(2, 2)
+#     d.assign_order(3, 3)
+#     print d.get_orders(1)
+#     print d.get_orders(2)
+#     print d.get_orders(3)
 
 
 def test_drivers_move_1():
