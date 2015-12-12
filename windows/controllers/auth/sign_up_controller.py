@@ -6,6 +6,8 @@ from windows.controllers.auth.company_form import CompanyForm
 from windows.controllers.auth.driver_form import DriverForm
 from windows.widgets import SIGN_UP_WIDGET
 
+import hashlib
+
 
 class SignUpWidget(QtGui.QWidget):
 
@@ -45,14 +47,14 @@ class SignUpWidget(QtGui.QWidget):
             if role == 'Driver':
                 self.users.register_driver(
                     login,
-                    password,
+                    hashlib.sha224(password).hexdigest(),
                     data['capacity'],
                     data['location'],
                 )
             else:
                 self.users.register_organization(
                     login,
-                    password,
+                    hashlib.sha224(password).hexdigest(),
                     data['name'],
                     data['location'],
                 )

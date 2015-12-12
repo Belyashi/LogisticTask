@@ -22,6 +22,7 @@ class LoginWidget(QtGui.QWidget):
     def handle_sign_in(self):
         login = self.login_field.text()
         password = self.password_field.text()
+        password = hashlib.sha224(password).hexdigest()
         try:
             result = self.users.login(login, password)
         except ValueError as v:
