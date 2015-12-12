@@ -37,6 +37,7 @@ class OrderAdder(QtGui.QWidget):
                     good_id,
                     count
                 )
+            Goods().reduce(good_id, count)
         except Exception as e:
             self.error.setText('Something wrong with data.')
         finally:
