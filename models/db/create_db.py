@@ -47,7 +47,8 @@ def make_test_data():
 
 import sys
 
-if len(sys.argv) > 1 and sys.argv[1] == 'create':
+# if len(sys.argv) > 1 and sys.argv[1] == 'create':
+if __name__ == '__main__':
     create_db()
     create_tables()
     make_test_data()
