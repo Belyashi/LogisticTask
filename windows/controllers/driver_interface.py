@@ -52,14 +52,19 @@ class DriverInterface(QtGui.QWidget):
     def update_state(self):
         orders = self.driver.get_orders(self.driver_id)
         self.model.clear()
-        header_labels = [key for key in orders[0]] if len(orders) > 0 else\
-            ['id']
+        header_labels = [key for key in orders[0] if key != 'order_id'] if len(orders) > 0 else\
+           ['id']
         self.model.setHorizontalHeaderLabels(header_labels)
         row_count = 0
         for order in orders:
             column_count = 0
             for key, value in order.iteritems():
-                self.model.setItem(row_count, column_count,
-                                   QtGui.QStandardItem(str(value)))
-                column_count += 1
+                if key != 'order_id':
+                    if key == 'delivered':
+                        self.model.setItem(row_count, column_count,
+                                           QtGui.QStandardItem(str(bool(value))))
+                    else:
+                        self.model.setItem(row_count, column_count,
+                                           QtGui.QStandardItem(str(value)))
+                    column_count += 1
             row_count += 1
