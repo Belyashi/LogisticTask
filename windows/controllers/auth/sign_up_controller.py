@@ -1,6 +1,7 @@
 from PyQt4 import QtGui, uic
 
 from models.users import Users
+from models.map import Map
 from windows.controllers.auth.company_form import CompanyForm
 from windows.controllers.auth.driver_form import DriverForm
 from windows.widgets import SIGN_UP_WIDGET
@@ -41,20 +42,19 @@ class SignUpWidget(QtGui.QWidget):
         data = self.additional_data.currentWidget().get_data()
         if data['success'] and password == repeated_password and len(login) > 0:
             role = self.role_selector.currentText()
-            # FIXME: add normal city insertion
             if role == 'Driver':
                 self.users.register_driver(
                     login,
                     password,
                     data['capacity'],
-                    1  # data['location'],
+                    data['location'],
                 )
             else:
                 self.users.register_organization(
                     login,
                     password,
                     data['name'],
-                    1  # data['location'],
+                    data['location'],
                 )
             self.parent().close_sign_up()
         else:

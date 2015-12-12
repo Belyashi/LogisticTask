@@ -45,7 +45,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QLineEdit" name="location">
+    <widget class="QComboBox" name="comboBox">
      <property name="minimumSize">
       <size>
        <width>0</width>
