@@ -10,23 +10,14 @@ _path_to_scripts = '/'.join(
 
 
 def create_db():
-    # db = MySQLdb.connect(host=models.db.config.HOST,
-    #                      user=models.db.config.USER,
-    #                      passwd=models.db.config.PASSWD)
-
     db = oracle_tool.connect('system/oracle@127.0.0.1:1521/XE')
     db.autocommit(True)
     db.query("DROP DATABASE " + models.db.config.NAME)
     db.query("CREATE DATABASE " + models.db.config.NAME)
-    # db.commit()
     db.close()
 
 
 def create_tables():
-    # db = MySQLdb.connect(host=models.db.config.HOST,
-    #                      user=models.db.config.USER,
-    #                      passwd=models.db.config.PASSWD,
-    #                      db=models.db.config.NAME)
     db = oracle_tool.connect('system/oracle@127.0.0.1:1521/XE')
     with open(_path_to_scripts + "create_tables.sql", "r") as f:
         sql = f.read()
@@ -37,11 +28,6 @@ def create_tables():
 
 
 def make_test_data():
-    # db = MySQLdb.connect(host=models.db.config.HOST,
-    #                      user=models.db.config.USER,
-    #                      passwd=models.db.config.PASSWD,
-    #                      db=models.db.config.NAME)
-
     db = oracle_tool.connect('system/oracle@127.0.0.1:1521/XE')
     db.autocommit(True)
     with open(_path_to_scripts + "test_data.sql", "r") as f:
@@ -52,9 +38,6 @@ def make_test_data():
     db.close()
 
 
-import sys
-
-# if len(sys.argv) > 1 and sys.argv[1] == 'create':
 if __name__ == '__main__':
     create_db()
     create_tables()
