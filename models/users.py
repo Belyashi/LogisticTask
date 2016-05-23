@@ -4,6 +4,7 @@ from models.db.db import Db
 class Users(Db):
     def login(self, login, password):
         """:returns user id"""
+
         query = (
             'SELECT id, pass '
             'FROM Users '
@@ -22,13 +23,13 @@ class Users(Db):
 
     def is_driver(self, user_id):
         cur = self.execute('SELECT id FROM Drivers WHERE user_id = %s', (user_id,))
-        res = cur.rowcount > 0
+        res = len(cur.fetchall()) > 0
         cur.close()
         return res
 
     def is_organization(self, user_id):
         cur = self.execute('SELECT id FROM Organizations WHERE user_id = %s', (user_id,))
-        res = cur.rowcount > 0
+        res = len(cur.fetchall()) > 0
         cur.close()
         return res
 
@@ -89,7 +90,7 @@ class Users(Db):
             'WHERE login = %s'
         )
         cur = self.execute(query, (login,))
-        exist = cur.rowcount > 0
+        exist = len(cur.fetchall()) > 0
         cur.close()
         return exist
 

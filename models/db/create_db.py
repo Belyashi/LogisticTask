@@ -1,18 +1,20 @@
 import os
-import MySQLdb
+import cx_Oracle as oracle_tool
 
 import models.db.config
 
 _path_to_scripts = '/'.join(
-        os.path.abspath(__file__).split('/')[:-2]
-        + ['sql_scripts']
-    ) + '/'
+    os.path.abspath(__file__).split('/')[:-2]
+    + ['sql_scripts']
+) + '/'
 
 
 def create_db():
-    db = MySQLdb.connect(host=models.db.config.HOST,
-                         user=models.db.config.USER,
-                         passwd=models.db.config.PASSWD)
+    # db = MySQLdb.connect(host=models.db.config.HOST,
+    #                      user=models.db.config.USER,
+    #                      passwd=models.db.config.PASSWD)
+
+    db = oracle_tool.connect('system/oracle@127.0.0.1:1521/XE')
     db.autocommit(True)
     db.query("DROP DATABASE " + models.db.config.NAME)
     db.query("CREATE DATABASE " + models.db.config.NAME)
@@ -21,10 +23,11 @@ def create_db():
 
 
 def create_tables():
-    db = MySQLdb.connect(host=models.db.config.HOST,
-                         user=models.db.config.USER,
-                         passwd=models.db.config.PASSWD,
-                         db=models.db.config.NAME)
+    # db = MySQLdb.connect(host=models.db.config.HOST,
+    #                      user=models.db.config.USER,
+    #                      passwd=models.db.config.PASSWD,
+    #                      db=models.db.config.NAME)
+    db = oracle_tool.connect('system/oracle@127.0.0.1:1521/XE')
     with open(_path_to_scripts + "create_tables.sql", "r") as f:
         sql = f.read()
     cur = db.cursor()
@@ -32,11 +35,14 @@ def create_tables():
     cur.close()
     db.close()
 
+
 def make_test_data():
-    db = MySQLdb.connect(host=models.db.config.HOST,
-                         user=models.db.config.USER,
-                         passwd=models.db.config.PASSWD,
-                         db=models.db.config.NAME)
+    # db = MySQLdb.connect(host=models.db.config.HOST,
+    #                      user=models.db.config.USER,
+    #                      passwd=models.db.config.PASSWD,
+    #                      db=models.db.config.NAME)
+
+    db = oracle_tool.connect('system/oracle@127.0.0.1:1521/XE')
     db.autocommit(True)
     with open(_path_to_scripts + "test_data.sql", "r") as f:
         sql = f.read()
@@ -44,6 +50,7 @@ def make_test_data():
     cur.execute(sql)
     cur.close()
     db.close()
+
 
 import sys
 

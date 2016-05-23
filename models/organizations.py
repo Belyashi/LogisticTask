@@ -5,7 +5,7 @@ import utils
 
 class Organizations(Db):
     def get_organization_id(self, user_id):
-        cur = self.execute('SELECT id FROM Organizations WHERE user_id = %s', (user_id, ))
+        cur = self.callfunc('get_organization_id', (user_id,))
         data = cur.fetchall()
         cur.close()
         if len(data) == 0:
@@ -13,30 +13,17 @@ class Organizations(Db):
         return data[0][0]
 
     def get_goods(self, organization_id):
-        query = 'SELECT id FROM Goods WHERE producer_id = %s'
-        cursor = self.execute(query, (organization_id,))
+        cursor = self.callfunc('get_goods', (organization_id,))
         data = self.get_dict_list(['good_id'], cursor)
         cursor.close()
         return data
 
     def add_goods(self, name, price, organization_id, weight, residue):
-        query = (
-            'INSERT INTO Goods '
-            '(name, price, producer_id, weight, residue) '
-            'VALUES (%s, %s, %s, %s, %s) '
-        )
-        cursor = self.execute(query, (name, price, organization_id, weight, residue))
+        cursor = self.callfunc('add_goods', (name, price, organization_id, weight, residue,))
         cursor.close()
 
     def get_orders(self, organization_id):
-        query = (
-            'SELECT id, delivered, count, '
-            '(select name from Goods '
-            'where id=Orders.goods_id) '
-            'FROM Orders '
-            'WHERE customer_id = %s'
-        )
-        cursor = self.execute(query, (organization_id,))
+        cursor = self.callfunc('get_orders', (organization_id,))
         data = self.get_dict_list(['order_id', 'delivered', 'count', 'good'], cursor)
         cursor.close()
         return data
@@ -46,7 +33,7 @@ class Organizations(Db):
         query = (
             'INSERT INTO Orders'
             '(customer_id, delivered, goods_id, count)'
-            'VALUES (%s, FALSE, %s, %s)'
+            "VALUES (%s, 'N', %s, %s)"
         )
         self.execute(query, (organization_id, good_id, count)).close()
 
@@ -68,28 +55,14 @@ class Organizations(Db):
         self.__assign_way(driver_id, producer_city_id, finish_city_id)
 
     def __check_overflow_count(self, good_id, count):
-        query = 'SELECT residue FROM Goods WHERE id = %s'
-        cursor = self.execute(query, (good_id,))
+        cursor = self.callfunc('check_overflow_count', (good_id,))
         residue = cursor.fetchall()[0][0]
         cursor.close()
         if residue < count:
             raise OverflowError('residue must be larger, than count')
 
     def __get_driver(self, city_id):
-        query = (
-            'SELECT id '
-            'FROM Drivers '
-            'WHERE last_city_id = %s '
-            'AND on_way = FALSE '
-            'limit 1'
-        )
-        cursor = self.execute(query, (city_id,))
-        data = cursor.fetchall()
-        cursor.close()
-        if len(data) > 0:
-            return data[0][0]
-        query = 'SELECT id FROM Drivers WHERE on_way = FALSE limit 1'
-        cursor = self.execute(query)
+        cursor = self.callfunc('get_driver_for_deliver', (city_id,))
         data = cursor.fetchall()
         cursor.close()
         if len(data) == 0:
@@ -97,27 +70,10 @@ class Organizations(Db):
         return data[0][0]
 
     def __get_producer_city_id(self, good_id):
-        query = (
-            'SELECT city_id '
-            'FROM Organizations '
-            'WHERE id = '
-                '(SELECT producer_id '
-                'FROM Goods '
-                'WHERE id = %s limit 1) '
-        )
-        cur = self.execute(query, (good_id,))
-        data = cur.fetchall()
-        cur.close()
-        if len(data) == 0:
-            raise Exception('no such producer id')
-        return data[0][0]
+        return self.callfunc('get_producer_city_id', (good_id,))
 
     def __assign_order(self, driver_id, order_id):
-        query = ('INSERT INTO DriversOrders '
-                 '(driver_id, order_id) '
-                 'VALUES (%s, %s)')
-        cur = self.execute(query, (driver_id, order_id))
-        cur.close()
+        self.callproc('assign_order', (driver_id, order_id,))
 
     def __assign_way(self, driver_id, start_ciy_id, finish_city_id):
         path = utils.dijsktra(start_ciy_id, finish_city_id)
@@ -125,7 +81,7 @@ class Organizations(Db):
             query = (
                 'INSERT INTO Routes '
                 '(driver_id, way_id, performed) '
-                'VALUES (%s, %s, FALSE) '
+                "VALUES (%s, %s, 'N') "
             )
             way_id = self.__get_way_id(start_ciy_id, finish_city_id)
             cur = self.execute(query, (driver_id, way_id))
@@ -136,7 +92,7 @@ class Organizations(Db):
         query = (
             'SELECT id FROM Ways '
             'WHERE start_city_id = %s AND finish_city_id = %s '
-            'limit 1 '
+            'AND ROWNUM <= 1'
         )
         cur = self.execute(query, (start_city_id, finish_city_id))
         data = cur.fetchall()
